@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Signup – SugarOza</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      background-color: #fff6f6;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    }
+     h1, h2, h3, h4, h5, h6 {
+      font-family: 'DM Serif Display', serif;
+    }
+    .signup-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .signup-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .signup-img {
+        flex: 1;
+        background: url('assets/sugaroza_main4.png') no-repeat center center/cover;
+        min-height: 300px;
+    }
+
+    .signup-form {
+      flex: 1;
+      padding: 2rem;
+      min-width: 300px;
+    }
+    .form-control:focus {
+      box-shadow: none;
+      border-color: #e29595;
+    }
+    .btn-dark:hover {
+      background-color: #e29595;
+      border-color: #e29595;
+    }
+    .form-links a {
+      color: #e29595;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .form-links a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 768px) {
+      .signup-img {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Minimal Top Nav -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">SugarOza</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse text-center" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#categories">Categories</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="cart.html"><i class="bi bi-cart3"></i> Cart</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html"><i class="bi bi-person-circle"></i> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="signup-wrapper">
+        <div class="signup-card">
+          <div class="signup-img"></div>
+          <div class="signup-form">
+            <h3 class="text-center mb-3">Join the Sweet Side </h3>
+            <p class="text-center text-muted mb-4">Create your account to access delicious desserts!</p>
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-person"></i></span>
+                  <input type="text" class="form-control" name="fullname" placeholder="Your Name" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email address</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                  <input type="email" class="form-control" name="email" placeholder="you@example.com" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                  <input type="password" class="form-control" name="password" placeholder="Create a password" required>
+                </div>
+              </div>
+              <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-dark">Sign Up</button>
+              </div>
+              <div class="text-center form-links">
+                <small>Already have an account? <a href="login.html">Login here</a></small><br>
+                <small><a href="index.html">&larr; Return to Home</a></small>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="bg-dark text-white text-center py-4">
+  <div class="container">
+    <p class="mb-2">© 2025 SugarOza. All rights reserved.</p>
+    <h6 class="mb-2">Follow Us</h6>
+    <div>
+      <a href="#" class="text-light me-3"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="text-light me-3"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="text-light me-3"><i class="bi bi-twitter"></i></a>
+      <a href="#" class="text-light"><i class="bi bi-pinterest"></i></a>
+    </div>
+  </div>
+</footer>
+<!-- Toast Notification -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="signupToast" class="toast bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body">🎉 Signed up successfully!</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const form = document.querySelector('form');
+  const toastEl = document.getElementById('signupToast');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); // remove this line when backend is connected
+    const toast = new bootstrap.Toast(toastEl);
+    toast.show();
+  });
+</script>
+</body>
+</html>

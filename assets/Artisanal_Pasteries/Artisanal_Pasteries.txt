@@ -1,0 +1,29 @@
+Croissants: Flaky, buttery pastries with a crescent shape.
+
+Pain au Chocolat: Croissants filled with chocolate.
+
+Kouign Amann: A buttery, flaky pastry with a caramelized crust.
+
+Canelé: Small, sweet pastries with a caramelized crust and a soft, custard-like center.
+
+Pain au raisin - A buttery croissant filled with raisins.
+
+Tartelettes aux fruits - Mini tarts filled with fresh fruit and topped with powdered sugar.
+
+Brioche - A rich, buttery pastry often served with jam or butter.
+
+Quiches - Savory tarts filled with eggs, cheese, and vegetables.
+
+Vol-au-vents - Puff pastry shells filled with savory fillings like chicken, mushroom, or seafood.
+
+Lemon Tart: A classic tart with a tangy lemon filling and a buttery crust.
+
+Chocolate Tart: A rich and decadent tart with a chocolate ganache filling.
+
+Fruit Tart: A tart topped with a variety of fresh fruits.
+
+Cheesecake Tart: A creamy and indulgent tart with a graham cracker crust.
+
+Pecan Pie: A sweet and nutty tart made with pecans, corn syrup, and eggs.
+
+Apple Tart: A classic tart made with apples and a flaky crust.
