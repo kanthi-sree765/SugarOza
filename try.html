@@ -2,247 +2,414 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="SugarOza: Modern, mobile-friendly dessert shop frontend with animations and carousel">
-  <meta name="keywords" content="HTML, CSS, Bootstrap, JavaScript, Portfolio, Frontend Developer, Responsive Design">
-
-  <title>SugarOza</title>
-
-  <!-- Bootstrap & Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-
-  <!-- Fonts -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard – SugarOza</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
-
-  <!-- AOS -->
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
   <style>
     :root {
-      --main-bg: #fffaf7;
-      --accent: #fcb1b1;
-      --text-dark: #333;
+      --accent: #e29595;
+      --bg: #fffaf7;
     }
-
     body {
+      background-color: var(--bg);
       font-family: 'Quicksand', sans-serif;
-      background-color: var(--main-bg);
-      color: var(--text-dark);
+      margin: 0;
     }
-
     h1, h2, h3, h4, h5, h6 {
       font-family: 'DM Serif Display', serif;
     }
-
-    .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    .sidebar {
+      min-height: 100vh;
+      background: #fff;
+      padding: 2rem 1rem;
+      border-right: 1px solid rgba(0,0,0,0.03);
     }
-
-    .btn-dark:hover {
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
-    background-color: #000;
+    .sidebar .brand {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-
-
-    .category-img {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 3px solid #eaeaea;
-      transition: transform 0.3s ease;
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      margin-bottom: 4px;
+      transition: background .2s, color .2s;
+      cursor: pointer;
     }
-
-    .category-img:hover {
-      transform: scale(1.1);
+    .sidebar a i {
+      font-size: 1.1rem;
     }
-
-    .category-card {
-      background: #ffffff;
-      border-radius: 1rem;
-      padding: 1rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      transition: transform 0.3s;
+    .sidebar a.active, .sidebar a:hover {
+      background: rgba(226,149,149,0.1);
+      color: var(--accent);
     }
-
-    .category-card:hover {
-      transform: scale(1.05);
+    .content {
+      padding: 2rem;
     }
-
-    h2.section-title {
-      font-size: 2.2rem;
-      position: relative;
-      display: inline-block;
+    .card-stat {
+      border-left: 5px solid var(--accent);
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      background: #fff;
     }
-
-    h2.section-title::after {
-      content: "";
-      width: 60%;
-      height: 4px;
-      background: var(--accent);
-      position: absolute;
-      left: 20%;
-      bottom: -10px;
-      border-radius: 2px;
+    .table-wrapper {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1rem 1rem 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     }
-
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-      background-color: #fff;
-      border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      background-size: 60%;
+    .badge-status-pending {
+      background: #ffe8d6;
+      color: #b85c00;
     }
-
-    .custom-shape-divider-top svg {
+    .badge-status-delivered {
+      background: #d1f2d8;
+      color: #1d7a3f;
+    }
+    .filter-btns .btn {
+      margin-right: 4px;
+    }
+    .section-panel {
+      display: none;
+    }
+    .section-panel.active {
       display: block;
-      width: 100%;
-      height: 60px;
-      transform: rotate(180deg);
+    }
+    .small-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-white shadow-sm">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="#">SugarOza</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse text-center" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#categories">Categories</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-cart3"></i> Cart</a></li>
-        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-person-circle"></i> Login</a></li>
-      </ul>
+<div class="container-fluid">
+  <div class="row g-0">
+    <!-- Sidebar -->
+    <div class="col-lg-2 sidebar">
+      <div class="brand fw-bold mb-3">
+        <span>🍰</span><span>SugarOza Admin</span>
+      </div>
+      <a data-section="dashboard" class="active"><i class="bi bi-speedometer2"></i> Dashboard</a>
+      <a data-section="products"><i class="bi bi-box-seam"></i> Manage Products</a>
+      <a data-section="orders"><i class="bi bi-cart-check"></i> Orders</a>
+      <a data-section="customers"><i class="bi bi-people"></i> Customers</a>
+      <a data-section="analytics"><i class="bi bi-bar-chart-line"></i> Analytics</a>
+      <a data-section="settings"><i class="bi bi-gear"></i> Settings</a>
+      <hr>
+      <a href="index.html"><i class="bi bi-house-door"></i> Back to Site</a>
+      <a href="#"><i class="bi bi-box-arrow-right"></i> Logout</a>
     </div>
-  </div>
-</nav>
 
-<!-- Hero Banner -->
-<section class="bg-light py-5 text-center">
-  <div class="container" data-aos="fade-up">
-    <h1 class="display-5 fw-bold">Delight in Every Bite</h1>
-    <p class="lead">Handcrafted desserts delivered with love. Explore our bestsellers now!</p>
-    <a href="#categories" class="btn btn-dark btn-lg mt-3">Shop Desserts</a>
-  </div>
-</section>
-
-<!-- Explore Categories -->
-<section class="py-5" id="categories">
-  <div class="container text-center">
-    <h2 class="mb-5 section-title">Explore Categories</h2>
-    <!-- Carousel code remains unchanged -->
-    <!-- ... -->
-     <div id="categoryCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-touch="true">
-      <div class="carousel-inner">
-
-        <!-- Slide 1 -->
-        <div class="carousel-item active">
-          <div class="row g-4 justify-content-center">
-            <div class="col-6 col-sm-4 col-md-3 " data-aos="zoom-in"><img src="assets/customcake_ai.png" alt="Cakes" class="category-img mb-2" /><h6>Cakes</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 " data-aos="zoom-in" data-aos-delay="100"><img src="assets/dessertsjarai.png" alt="Dessert Jars" class="category-img mb-2" /><h6>Dessert Jars</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 " data-aos="zoom-in" data-aos-delay="200"><img src="assets/macronsai.png" alt="Macarons" class="category-img mb-2" /><h6>Macarons</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 " data-aos="zoom-in" data-aos-delay="300"><img src="assets/gourmet_cookiesai.png" alt="Cookies" class="category-img mb-2" /><h6>Cookies</h6></div>
+    <!-- Main Content -->
+    <div class="col-lg-10 content">
+      <!-- Dashboard Panel -->
+      <div id="dashboard" class="section-panel active">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start mb-4">
+          <div>
+            <h2 class="mb-1">Dashboard Overview</h2>
+            <p class="text-muted">Welcome back, Admin. Here's the summary of recent activity.</p>
           </div>
         </div>
 
-        <!-- Slide 2 -->
-        <div class="carousel-item">
-          <div class="row g-4 justify-content-center">
-            <div class="col-6 col-sm-4 col-md-3 "><img src="assets/exotic_chocolateai.png" alt="Chocolates" class="category-img mb-2" /><h6>Chocolates</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 "><img src="assets/donutsai.png" alt="Donuts" class="category-img mb-2" /><h6>Donuts</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 "><img src="assets/Artisanal_Pastriesai.png" alt="Pastries" class="category-img mb-2" /><h6>Pastries</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 "><img src="assets/minidessertsai.png" alt="Mini Desserts" class="category-img mb-2" /><h6>Mini Desserts</h6></div>
+        <div class="row g-4 mb-5">
+          <div class="col-6 col-md-3">
+            <div class="card card-stat p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1">Orders</h6>
+                  <h4 class="mb-0">124</h4>
+                </div>
+                <i class="bi bi-bag fs-2 text-muted"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="card card-stat p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1">Revenue</h6>
+                  <h4 class="mb-0">₹25,000</h4>
+                </div>
+                <i class="bi bi-currency-rupee fs-2 text-muted"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="card card-stat p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1">Customers</h6>
+                  <h4 class="mb-0">89</h4>
+                </div>
+                <i class="bi bi-people fs-2 text-muted"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="card card-stat p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1">Products</h6>
+                  <h4 class="mb-0">47</h4>
+                </div>
+                <i class="bi bi-box-seam fs-2 text-muted"></i>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Slide 3 -->
-        <div class="carousel-item">
-          <div class="row g-4 justify-content-center">
-            <div class="col-6 col-sm-4 col-md-3 "><img src="assets/frozen_yogurtai.png" alt="Yogurt Bites" class="category-img mb-2" /><h6>Yogurt Bites</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 "><img src="assets/parfaitsai.png" alt="Parfaits" class="category-img mb-2" /><h6>Parfaits</h6></div>
+        <hr/>
+
+        <div class="mb-5">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">Recent Orders</h4>
+            <div>
+              <button class="btn btn-sm btn-outline-secondary me-2"><i class="bi bi-filter"></i> Filter</button>
+              <button class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-repeat"></i> Refresh</button>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <div class="table-responsive">
+              <table class="table table-borderless table-striped align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>#Order</th>
+                    <th>Customer</th>
+                    <th>Item</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#1023</td>
+                    <td>Riya Sharma</td>
+                    <td>Custom Cake</td>
+                    <td>₹850</td>
+                    <td><span class="badge bg-warning text-dark">Pending</span></td>
+                    <td>Jul 29, 2025</td>
+                    <td><button class="btn btn-sm btn-outline-secondary"><i class="bi bi-three-dots"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td>#1022</td>
+                    <td>Arjun Mehta</td>
+                    <td>Chocolate Jar</td>
+                    <td>₹299</td>
+                    <td><span class="badge bg-success">Delivered</span></td>
+                    <td>Jul 28, 2025</td>
+                    <td><button class="btn btn-sm btn-outline-secondary"><i class="bi bi-three-dots"></i></button></td>
+                  </tr>
+                  <!-- more rows -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Carousel Controls -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev" style="left: -4rem;">
-        <i class="bi bi-chevron-left fs-2 text-dark"></i>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next" style="right: -4rem;">
-        <i class="bi bi-chevron-right fs-2 text-dark"></i>
-      </button>
+      <!-- Manage Products Panel -->
+      <div id="products" class="section-panel">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h2 class="mb-1">Manage Products</h2>
+            <p class="text-muted">Add, edit or remove dessert products.</p>
+          </div>
+          <button class="btn btn-dark"><i class="bi bi-plus-lg"></i> Add New Product</button>
+        </div>
+        <div class="row g-4">
+          <!-- Sample product card with edit/delete -->
+          <div class="col-md-4">
+            <div class="small-card">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <h6 class="mb-1">Exotic Chocolate Cake</h6>
+                  <p class="small text-muted mb-1">₹499</p>
+                </div>
+                <div>
+                  <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                </div>
+              </div>
+              <p class="small">Rich dark chocolate layered cake with berries.</p>
+            </div>
+          </div>
+          <!-- Repeat as needed -->
+        </div>
+      </div>
+
+      <!-- Orders Panel -->
+      <div id="orders" class="section-panel">
+        <div class="mb-4">
+          <h2 class="mb-1">Orders</h2>
+          <p class="text-muted">All recent and past orders.</p>
+        </div>
+        <div class="table-wrapper">
+          <div class="table-responsive">
+            <table class="table table-bordered align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>#Order</th>
+                  <th>Customer</th>
+                  <th>Items</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#1050</td>
+                  <td>Pooja Singh</td>
+                  <td>Macaron Box, Cookies</td>
+                  <td>₹850</td>
+                  <td><span class="badge bg-info text-dark">Processing</span></td>
+                  <td>Jul 30, 2025</td>
+                  <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                </tr>
+                <tr>
+                  <td>#1049</td>
+                  <td>Vikram Patel</td>
+                  <td>Donuts Pack</td>
+                  <td>₹299</td>
+                  <td><span class="badge bg-success">Delivered</span></td>
+                  <td>Jul 29, 2025</td>
+                  <td><button class="btn btn-sm btn-outline-primary">View</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customers Panel -->
+      <div id="customers" class="section-panel">
+        <div class="mb-4">
+          <h2 class="mb-1">Customers</h2>
+          <p class="text-muted">Users who placed orders.</p>
+        </div>
+        <div class="row gy-4">
+          <div class="col-md-6">
+            <div class="small-card d-flex justify-content-between align-items-center">
+              <div>
+                <h6 class="mb-1">Aarav Kumar</h6>
+                <p class="small text-muted mb-0">aarav@example.com</p>
+              </div>
+              <div>
+                <span class="badge bg-primary">Active</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="small-card d-flex justify-content-between align-items-center">
+              <div>
+                <h6 class="mb-1">Nisha Reddy</h6>
+                <p class="small text-muted mb-0">nisha@example.com</p>
+              </div>
+              <div>
+                <span class="badge bg-secondary">Inactive</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics Panel -->
+      <div id="analytics" class="section-panel">
+        <div class="mb-4">
+          <h2 class="mb-1">Analytics</h2>
+          <p class="text-muted">Trends and performance metrics.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="small-card">
+              <h6 class="mb-1">Top Selling</h6>
+              <p class="mb-0">Macaron Box</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="small-card">
+              <h6 class="mb-1">Revenue Growth</h6>
+              <p class="mb-0">+12% this month</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="small-card">
+              <h6 class="mb-1">Returning Customers</h6>
+              <p class="mb-0">34%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Panel -->
+      <div id="settings" class="section-panel">
+        <div class="mb-4">
+          <h2 class="mb-1">Settings</h2>
+          <p class="text-muted">Configure store preferences.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="small-card">
+              <h6>Store Info</h6>
+              <p class="small mb-1">SugarOza Desserts Pvt Ltd</p>
+              <p class="small mb-0">Location: Mumbai, India</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="small-card">
+              <h6>Notifications</h6>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="emailNotif" checked>
+                <label class="form-check-label" for="emailNotif">Email Alerts</label>
+              </div>
+              <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" id="smsNotif">
+                <label class="form-check-label" for="smsNotif">SMS Alerts</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="text-center py-3 mt-5">
+        <small class="text-muted">&copy; 2025 SugarOza Admin</small>
+      </footer>
     </div>
   </div>
-  </div>
-</section>
-
-<!-- Decorative SVG Divider -->
-<div class="custom-shape-divider-top">
-  <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-    <path d="M321.39,56.44C232.2,70.29,137.62,69.19,48,57.74V0H1200V27.35C1101.24,63.3,978.12,86.6,857.44,84.21C736.8,81.83,618.59,53.6,497.8,43.3C433.39,37.88,377.87,42.13,321.39,56.44Z" fill="#fff"></path>
-  </svg>
 </div>
 
-<!-- Testimonials -->
-<section class="bg-white py-5" data-aos="fade-up">
-  <div class="container text-center">
-    <h2 class="section-title mb-4">What Our Customers Say</h2>
-    <blockquote class="blockquote">
-      <p class="mb-0">“Absolutely divine! The macarons melted in my mouth. SugarOza never disappoints.”</p>
-      <footer class="blockquote-footer mt-2">Aditi from Mumbai</footer>
-    </blockquote>
-  </div>
-</section>
+<script>
+  // Sidebar navigation logic
+  document.querySelectorAll('.sidebar a[data-section]').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      const target = el.getAttribute('data-section');
+      document.querySelectorAll('.section-panel').forEach(panel => {
+        panel.classList.toggle('active', panel.id === target);
+      });
+    });
+  });
+</script>
 
-<!-- Newsletter -->
-<section class="py-5 bg-light" data-aos="fade-up">
-  <div class="container text-center">
-    <h2 class="section-title mb-3">Stay Sweet</h2>
-    <p class="lead mb-4">Subscribe for exclusive dessert drops and updates!</p>
-    <div class="d-flex justify-content-center flex-wrap gap-2">
-      <input type="email" placeholder="Enter your email" class="form-control w-50" />
-      <button class="btn btn-dark">Subscribe</button>
-    </div>
-  </div>
-</section>
-
-<!-- About Us -->
-<section class="py-5 bg-light" id="about">
-  <div class="container text-center" data-aos="fade-up">
-    <h2 class="section-title mb-3">About Us</h2>
-    <p class="lead mx-auto" style="max-width: 600px;">
-      We’re passionate bakers with a love for crafting beautiful and delicious desserts. From creamy cakes to bite-sized macarons, everything is made with love and delivered fresh to your doorstep.
-    </p>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-4">
-  <div class="container">
-    <p class="mb-2">© 2025 SugarOza. All rights reserved.</p>
-    <h6 class="mb-2">Follow Us</h6>
-    <div>
-      <a href="#" class="text-light me-3"><i class="bi bi-instagram"></i></a>
-      <a href="#" class="text-light me-3"><i class="bi bi-facebook"></i></a>
-      <a href="#" class="text-light me-3"><i class="bi bi-twitter"></i></a>
-      <a href="#" class="text-light"><i class="bi bi-pinterest"></i></a>
-    </div>
-  </div>
-</footer>
-
-<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>AOS.init();</script>
 </body>
 </html>
